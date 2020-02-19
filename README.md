@@ -1,2 +1,2 @@
-# chess-analysis
-python analysis analyzing game history for common mistakes
+# chess_analysis
+Analysis engine to find strengths and weaknesses from Chess.com games
