@@ -6,11 +6,4 @@ results:
   - abandoned
   - timeout
   - repetition
-colors:
-  - white
-  - black
-time_controls:
-  - 60
-  - 600
-  - 1500
   
