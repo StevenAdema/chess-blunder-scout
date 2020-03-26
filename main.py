@@ -22,7 +22,7 @@ def main():
     username = 'stevenadema'  # Chess.com username
     # enginepath = 'C:/Users/steven.adema/Downloads/stockfish-10-win/stockfish-10-win/Windows/stockfish_10_x64_bmi2.exe'
     enginepath = 'C:/Users/Steve/Downloads/stockfish-10-win/Windows/stockfish_10_x64_bmi2.exe'
-    eval_time = 0.1  # Set time for move evaluation
+    eval_time = 0.2  # Set time for move evaluation
     df_cols = ['url', 'pgn', 'time_control', 'end_time', 'rated', 'time_class', 'blitz']
 
     # df = pd.DataFrame(columns=df_cols)
@@ -87,15 +87,23 @@ def main():
     # df.to_csv(r'C:\Users\Steve\Documents\GitHub\chess_analysis\code.csv', index=False, sep='|')
 
     game1 = df.iloc[5]['pgn']
-    fen, povscores, labels = get_move_scores(df, username, enginepath, eval_time, game1)
-    print(fen)
-    find_blunders(povscores, 1)
-    # exit()
+    fen, mv, mv_score, bmv, bmv_score, difs = get_move_scores(df, username, enginepath, eval_time, game1)
 
-    povscores = pd.Series.from_array(povscores)
+    game1_df = pd.DataFrame(
+        {'fen': fen,
+         'mv': mv,
+         'mv_score': mv_score,
+         'bmv': bmv,
+         'bmv_score': bmv_score,
+         'difs': difs
+        })
+    print(game1_df)
+    exit()
+
+    mv_score = pd.Series.from_array(mv_score)
     # Plot the figure.
     plt.figure(figsize=(12, 8))
-    ax = povscores.plot(kind='bar')
+    ax = mv_score.plot(kind='bar')
     ax.set_xlabel('Move')
     ax.set_ylabel('Cp Score')
     ax.set_xticklabels(np.arange(len(labels)))
@@ -113,7 +121,7 @@ def main():
 
 def get_move_scores(df, username, enginepath, eval_time, g):
     user_color = df.iloc[5]['user_color']
-    fen, povscores, labels = [], [], []
+    fen, mv, mv_score, bmv, bmv_score, difs = [], [], [], [], [], []
 
     pgn = io.StringIO(g)
     game = chess.pgn.read_game(pgn)
@@ -121,58 +129,51 @@ def get_move_scores(df, username, enginepath, eval_time, g):
     # setup board and engine
     board = chess.Board()
     engine = chess.engine.SimpleEngine.popen_uci(enginepath)
-    first_move = True
+    i = 0
     for move in game.mainline_moves():
-        # find score of my move
+        i += 1
+
         mymove_info = engine.analyse(board, chess.engine.Limit(time=eval_time))
-        # convert move score to Cp score
-        if mymove_info['score'].is_mate():
-            mymove_score = mymove_info['score'].white().score(mate_score=1000)
-        else: 
-            mymove_score = int(format(mymove_info['score'].white().score()))
-        # get fens, labels, and povscores
+        best_move = mymove_info['pv'][0]
+        board.push(move)
+        mymove_info = engine.analyse(board, chess.engine.Limit(time=eval_time))
+        mymove_score = get_move_score(mymove_info, 'white')
+        board.pop()
+        board.push(best_move)
+        bestmove_info = engine.analyse(board, chess.engine.Limit(time=eval_time))
+        bestmove_score = get_move_score(bestmove_info, 'white')
+        dif = bestmove_score - mymove_score
+        print(mymove_score, ' ', bestmove_score)
+        board.pop()
+        board.push(move)
+
+        # get fens, labels, povscores, difs
         fen.append(str(board.fen()))
-        labels.append(board.san(move))
-        povscores.append(mymove_score)
-
-        if not first_move:
-            print('second+ move')
-            print(mymove_info)
-            print('my move and score: ', board.san(move), ' ', mymove_score)
-            print(board)
-            board.pop()
-            best_move_info = engine.analyse(board, chess.engine.Limit(time=eval_time))
-            best_move_san = best_move_info['pv'][0]
-            board.push(best_move_san)
-            print(board)
-
-            if mymove_info['score'].is_mate():
-                best_move_score = best_move_info['score'].white().score(mate_score=1000)
-            else: 
-                best_move_score = int(format(best_move_info['score'].white().score()))
-
-            print('best move and score: ', best_move_san, ' ', best_move_score)
-            board.pop()
-            print(board)
-            board.push(move)
-            print(board)
-        else:
-            print('1st move')
-            board.push(move)
-
-        first_move = False
-        # best_move_score = engine.analyse(board, chess.engine.Limit(time=eval_time))
-        # best_move_score = int(format(mymove_info['score'].white().score()))
-
+        mv.append(str(move))
+        mv_score.append(mymove_score)
+        bmv.append(str(best_move))
+        bmv_score.append(bestmove_score)
+        difs.append(dif)
 
     engine.quit()
-    return fen, povscores, labels
+    return fen, mv, mv_score, bmv, bmv_score, difs
 
-def find_blunders(scores, wb):
-    for i in range(wb, len(scores), 2):
-        dif = (scores[i] - scores[i-1])
-        if dif > 100:
-            print('blunder at move: ', i, 'dif: ', dif)
+def get_move_score(board_info, color, mate=1000):
+    if color == 'white':
+        if board_info['score'].is_mate():
+            m = board_info['score'].white().score(mate_score=mate)
+        else: 
+            m = int(format(board_info['score'].white().score()))
+    elif color == 'black': 
+        if board_info['score'].is_mate():
+            m = board_info['score'].white().score(mate_score=mate)
+        else: 
+            m = int(format(board_info['score'].white().score()))
+    else:
+        print('Invalid color perspective chosen')
+
+    return m        
+
 
 if __name__ == "__main__":
     main()
