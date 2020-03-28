@@ -97,6 +97,7 @@ def main():
          'bmv_score': bmv_score,
          'difs': difs
         })
+    bad_moves = game1_df[game1_df[difs] < 150]
     print(game1_df)
     exit()
 
@@ -143,7 +144,6 @@ def get_move_scores(df, username, enginepath, eval_time, g):
         bestmove_info = engine.analyse(board, chess.engine.Limit(time=eval_time))
         bestmove_score = get_move_score(bestmove_info, 'white')
         dif = bestmove_score - mymove_score
-        print(mymove_score, ' ', bestmove_score)
         board.pop()
         board.push(move)
 
@@ -158,7 +158,7 @@ def get_move_scores(df, username, enginepath, eval_time, g):
     engine.quit()
     return fen, mv, mv_score, bmv, bmv_score, difs
 
-def get_move_score(board_info, color, mate=1000):
+def get_move_score(board_info, color, mate=1500):
     if color == 'white':
         if board_info['score'].is_mate():
             m = board_info['score'].white().score(mate_score=mate)
