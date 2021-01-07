@@ -2,6 +2,8 @@ import chess
 import chess.pgn
 import chess.engine
 import pandas as pd
+from read_pgn import PGNReader
+from db import ChessDB
 pd.set_option('display.max_rows', 15)
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
@@ -9,11 +11,13 @@ pd.set_option('display.max_colwidth', 100)
 
 
 def main():
-    # pgn = PGNReader('stevenadema', 2)
-    # pgn.filter_time_control('600')
-    df = pd.read_csv('df.csv', sep="|")
+    pgn = PGNReader('stevenadema', 8)
+    pgn.filter_time_control('600')
+    pgn.df.to_csv('df2.csv', index=False, sep="|")
+    # df = pd.read_csv('df.csv', sep="|")
+    db = ChessDB(pgn.df)
+    exit()
 
-    print(df.shape)
     df = df[df['difs'] > 50]
     df = df.loc[df['time_control'] == 600]
     df = df.reset_index()
