@@ -10,12 +10,12 @@ import io
 pd.set_option('display.max_rows', 15)
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
-pd.set_option('display.max_colwidth', 200)
+pd.set_option('display.max_colwidth', 300)
 
 
 class PGNReader:
     engine_path = 'C:/Users/Steven/Downloads/stockfish_12_win_x64_bmi2/stockfish_20090216_x64_bmi2.exe'
-    eval_time = 0.25  # Set time for move evaluation
+    eval_time = 0.2  # Set time for move evaluation
     limit = 20 # move limit for analysis
     df_cols = ['url', 'pgn', 'time_control', 'end_time', 'rated', 'time_class',
                'user_rating', 'user_username', 'user_result', 'user_color', 'opp_rating',
@@ -29,10 +29,13 @@ class PGNReader:
         self.get_games(self.username, self.lookback)
         self.parse_player_stats()
         self.format_df()
-        # self.df = self.df.head(1)
-        print(self.df.shape)
+        # self.df = self.df.head(5)
         self.df_moves = self.get_move_scores()
-        self.df = pd.merge(self.df, self.df_moves, on='url', how='right')
+        print(self.df.shape)
+        print(self.df_moves.shape)
+        self.df = pd.merge(self.df_moves, self.df, on='url', how='left')
+        print(self.df.shape)
+        self.df_moves.to_csv('df4.csv', sep="|", index=False)
         self.df.to_csv('df.csv', index=False, sep='|')
 
     def get_games(self, username, lookback):
@@ -154,3 +157,5 @@ class PGNReader:
              })
 
         return game_moves_df
+
+pgn = PGNReader('stevenadema', 1)

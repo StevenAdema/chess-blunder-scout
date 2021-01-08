@@ -6,3 +6,5 @@ code2.py
 *.pgn
 __pycache__/
 *.pyc
+venv/
+data/
