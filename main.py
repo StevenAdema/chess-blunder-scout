@@ -11,10 +11,11 @@ pd.set_option('display.max_colwidth', 200)
 
 
 def main():
-    # pgn = PGNReader('stevenadema', 2)
-    # pgn.filter_time_control('600')
-    df = pd.read_csv('df.csv', sep="|")
+    pgn = PGNReader('stevenadema', 1)
+    pgn.filter_time_control('600')
+    # df = pd.read_csv('df.csv', sep="|")
     # db = ChessDB(pgn.df)
+    df = pgn.df
     print(df.shape)
     df = df[['url','fen_y','mv','mv_score','bmv','bmv_score','difs']]
     df = df[df['difs'] > 100]
@@ -36,7 +37,6 @@ def main():
     info = engine.analyse(board, chess.engine.Limit(depth=20))
     print(board)
     print(info)
-    
 
 
 if __name__ == "__main__":
