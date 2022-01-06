@@ -16,12 +16,9 @@ def main():
     # df = pd.read_csv('df.csv', sep="|")
     # db = ChessDB(pgn.df)
     df = pgn.df
-    print(df.shape)
     df = df[['url','fen_y','mv','mv_score','bmv','bmv_score','difs']]
     df = df[df['difs'] > 100]
-    print(df.shape)
     df = df.drop_duplicates(subset=['url', 'mv'])
-    print(df.shape)
     df.to_csv('df3.csv', sep="|", index=False)
     df2 = df.groupby(by=['fen_y']).count()
     df2 = df2.sort_values(by='mv', ascending=False)
@@ -29,11 +26,10 @@ def main():
     df.to_csv('df4.csv', sep="|", index=False)
     exit()
 
-
-    fen = df.iloc[2]['fen_y']
-    print(df.iloc[2])
+    fen = df.iloc[0]['fen_y']
+    print(df.iloc[0])
     board = chess.Board(fen)
-    engine = chess.engine.SimpleEngine.popen_uci('C:/Users/Steven/Downloads/stockfish_12_win_x64_bmi2/stockfish_20090216_x64_bmi2.exe')
+    engine = chess.engine.SimpleEngine.popen_uci('C:/Users/Steven/Documents/Unsorted/stockfish_14.1_win_x64_avx2.exe')
     info = engine.analyse(board, chess.engine.Limit(depth=20))
     print(board)
     print(info)

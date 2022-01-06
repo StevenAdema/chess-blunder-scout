@@ -14,8 +14,8 @@ pd.set_option('display.max_colwidth', 300)
 
 
 class PGNReader:
-    engine_path = 'C:/Users/Steven/Documents/Unsorted/stockfish_20090216_x64_bmi2.exe'
-    eval_time = 0.2  # Set time for move evaluation
+    engine_path = 'C:/Users/Steven/Documents/Unsorted/stockfish_14.1_win_x64_avx2.exe'
+    eval_time = 0.3  # Set time for move evaluation
     limit = 20 # move limit for analysis
     df_cols = ['url', 'pgn', 'time_control', 'end_time', 'rated', 'time_class',
                'user_rating', 'user_username', 'user_result', 'user_color', 'opp_rating',
@@ -31,10 +31,7 @@ class PGNReader:
         self.format_df()
         self.df = self.df.head(1)
         self.df_moves = self.get_move_scores()
-        print(self.df.shape)
-        print(self.df_moves.shape)
         self.df = pd.merge(self.df_moves, self.df, on='url', how='left')
-        print(self.df.shape)
         self.df_moves.to_csv('df4.csv', sep="|", index=False)
         self.df.to_csv('df.csv', index=False, sep='|')
 
@@ -44,7 +41,6 @@ class PGNReader:
         while lookback > 0:
             d = dt - relativedelta(months=lookback)
             d = d.strftime('%Y/%m')
-            print(d)
             response = requests.get(
                 r'https://api.chess.com/pub/player/' + username + '/games/' + d)
             j = json.loads(response.content.decode('utf-8'))
@@ -156,8 +152,8 @@ class PGNReader:
 
         return game_moves_df
 
-pgn = PGNReader('stevenadema', 1)
-df = pgn.df
-df = df[['url','fen_x','mv','mv_score','bmv','bmv_score','difs']]
-# df = df[df['difs'] > 100]
-print(df)
+# pgn = PGNReader('stevenadema', 1)
+# df = pgn.df
+# df = df[['url','fen_x','mv','mv_score','bmv','bmv_score','difs']]
+# # df = df[df['difs'] > 100]
+# print(df)
