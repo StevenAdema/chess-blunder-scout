@@ -28,7 +28,7 @@ class PGNReader:
         self.get_games(self.username, self.lookback)
         self.parse_player_stats()
         self.format_df()
-        # self.df = self.df.head(5)
+        self.df = self.df.head(5)
         self.df_moves = self.get_move_scores()
         self.df = pd.merge(self.df_moves, self.df, on='url', how='left')
 
@@ -72,7 +72,7 @@ class PGNReader:
         self.df.reset_index(drop=True, inplace=True)
 
     def get_move_scores(self):
-        url, fen, move_no, my_move, my_move_score, best_move, best_move_score, difs = [], [], [], [], [], [], [], []
+        url, fen, move_no, my_move_san, my_move_uci, my_move_score, best_move_san, best_move_uci, best_move_score, difs = [], [], [], [], [], [], [], [], [], []
 
         def get_move_score(board_info, color, mate=1500):
             if color == 'white':
@@ -130,9 +130,11 @@ class PGNReader:
 
                 # get fens, labels, povscores, difs
                 url.append(self.df.iloc[index]['url'])
-                my_move.append(san_move)
+                my_move_san.append(san_move)
+                my_move_uci.append(move)
                 my_move_score.append(mymove_score)
-                best_move.append(san_best_move)
+                best_move_san.append(san_best_move)
+                best_move_uci.append(best_move_to_play)
                 best_move_score.append(bestmove_score)
                 difs.append(dif)
 
@@ -146,17 +148,19 @@ class PGNReader:
             {'url': url,
              'fen': fen,
              'move_no': move_no,
-             'my_move': my_move,
+             'my_move_san': my_move_san,
+             'my_move_uci': my_move_uci,
              'my_move_score': my_move_score,
-             'best_move': best_move,
+             'best_move_san': best_move_san,
+             'best_move_uci': best_move_uci,
              'best_move_score': best_move_score,
              'difs': difs
              })
 
         return game_moves_df
 
-# pgn = PGNReader('stevenadema', 1)
+# pgn = PGNReader('stevenadema', 2)
 # df = pgn.df
-# df = df[['url','fen_x','move_no','my_move','my_move_score','best_move','best_move_score','difs']]
+# df = df[['url','fen_x','move_no','my_move_uci','my_move_score','best_move_uci','best_move_score','difs']]
 # df = df[df['difs'] > 100]
 # print(df)
