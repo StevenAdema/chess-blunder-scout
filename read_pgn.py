@@ -12,11 +12,10 @@ pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 pd.set_option('display.max_colwidth', 300)
 
-
 class PGNReader:
     engine_path = 'C:/Users/Steven/Documents/Unsorted/stockfish_14.1_win_x64_avx2.exe'
-    eval_time = 0.3  # Set time for move evaluation
-    limit = 20 # move limit for analysis
+    eval_time = 16  # Set time for move evaluation
+    limit = 30 # move limit for analysis
     df_cols = ['url', 'pgn', 'time_control', 'end_time', 'rated', 'time_class',
                'user_rating', 'user_username', 'user_result', 'user_color', 'opp_rating',
                'opp_username', 'opp_result', 'opp_color']
@@ -29,11 +28,9 @@ class PGNReader:
         self.get_games(self.username, self.lookback)
         self.parse_player_stats()
         self.format_df()
-        self.df = self.df.head(1)
+        # self.df = self.df.head(5)
         self.df_moves = self.get_move_scores()
         self.df = pd.merge(self.df_moves, self.df, on='url', how='left')
-        self.df_moves.to_csv('df4.csv', sep="|", index=False)
-        self.df.to_csv('df.csv', index=False, sep='|')
 
     def get_games(self, username, lookback):
         """ Retrieve monthly game archive via Chess.com API"""
@@ -75,7 +72,7 @@ class PGNReader:
         self.df.reset_index(drop=True, inplace=True)
 
     def get_move_scores(self):
-        url, fen, mv, mv_score, bmv, bmv_score, difs = [], [], [], [], [], [], []
+        url, fen, move_no, my_move, my_move_score, best_move, best_move_score, difs = [], [], [], [], [], [], [], []
 
         def get_move_score(board_info, color, mate=1500):
             if color == 'white':
@@ -91,6 +88,7 @@ class PGNReader:
 
             return m
 
+        print('Number of games: ', self.df.shape[0])
         for index, row in self.df.iterrows():
             g = self.df.iloc[index]['pgn']
             print('analyzing game ', index)
@@ -102,6 +100,7 @@ class PGNReader:
             # setup board and engine
             board = chess.Board()
             engine = chess.engine.SimpleEngine.popen_uci(self.engine_path)
+            engine.configure({"Threads": 4})
             i = 0
 
             for move in game.mainline_moves():
@@ -112,15 +111,18 @@ class PGNReader:
                     continue
 
                 # Get move, score and difference of user move and best move
-                mymove_info = engine.analyse(board, chess.engine.Limit(time=self.eval_time))
-                best_move = mymove_info['pv'][0]
+                move_no.append(round((i+1)/2))
+                mymove_info = engine.analyse(board, chess.engine.Limit(depth=self.eval_time))
+                best_move_to_play = mymove_info['pv'][0]
                 fen.append(str(board.fen()))
+                san_move = board.san(move)
                 board.push(move)
-                mymove_info = engine.analyse(board, chess.engine.Limit(time=self.eval_time))
+                mymove_info = engine.analyse(board, chess.engine.Limit(depth=self.eval_time))
                 mymove_score = get_move_score(mymove_info, user_color)
                 board.pop()
-                board.push(best_move)
-                bestmove_info = engine.analyse(board, chess.engine.Limit(time=self.eval_time))
+                san_best_move = board.san(best_move_to_play)
+                board.push(best_move_to_play)
+                bestmove_info = engine.analyse(board, chess.engine.Limit(depth=self.eval_time))
                 bestmove_score = get_move_score(bestmove_info, user_color)
                 dif = bestmove_score - mymove_score
                 board.pop()
@@ -128,10 +130,10 @@ class PGNReader:
 
                 # get fens, labels, povscores, difs
                 url.append(self.df.iloc[index]['url'])
-                mv.append(str(move))
-                mv_score.append(mymove_score)
-                bmv.append(str(best_move))
-                bmv_score.append(bestmove_score)
+                my_move.append(san_move)
+                my_move_score.append(mymove_score)
+                best_move.append(san_best_move)
+                best_move_score.append(bestmove_score)
                 difs.append(dif)
 
                 if i > self.limit:
@@ -143,10 +145,11 @@ class PGNReader:
         game_moves_df = pd.DataFrame(
             {'url': url,
              'fen': fen,
-             'mv': mv,
-             'mv_score': mv_score,
-             'bmv': bmv,
-             'bmv_score': bmv_score,
+             'move_no': move_no,
+             'my_move': my_move,
+             'my_move_score': my_move_score,
+             'best_move': best_move,
+             'best_move_score': best_move_score,
              'difs': difs
              })
 
@@ -154,6 +157,6 @@ class PGNReader:
 
 # pgn = PGNReader('stevenadema', 1)
 # df = pgn.df
-# df = df[['url','fen_x','mv','mv_score','bmv','bmv_score','difs']]
-# # df = df[df['difs'] > 100]
+# df = df[['url','fen_x','move_no','my_move','my_move_score','best_move','best_move_score','difs']]
+# df = df[df['difs'] > 100]
 # print(df)
