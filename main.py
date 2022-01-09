@@ -14,7 +14,7 @@ df = pd.read_csv('df3.csv', sep='|')
 # df['fen_x'] = [x.split('-')[-0] for x in df['fen_x']]
 # print(df)
 # print(df['fen_x'].value_counts())
-df['fen_x'].value_counts().to_csv('df4.csv')
+# df['fen_x'].value_counts().to_csv('df4.csv')
 
 fen = df.iloc[1]['fen_x']
 # print(df.iloc[1])
