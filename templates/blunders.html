@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Blunder Scout</title>
+{% endblock %}
+
+{% block body %}
+<script>
+var svg = '{{ svg }}';
+</script>
+    <div class="aligned">
+        <img src="{{ url_for('static', filename='blunder_scout.png') }}">
+    </div>
+{% for message in get_flashed_messages() %}
+                     <p class="simple_text">{{ message }}
+                     </p>
+                 {% endfor %}
+
+    <div class="parent_container">
+        <div class="container1">
+            <br>
+            {{ svg|safe }}
+        </div>
+
+        <div class="container2">
+            <form action="blunders" method="post">
+                <input type="text" name="name_input" placeholder="select best move e.g. Nf3">
+                <input type="button" class="button button_submit"value="Submit Move" id="greet" onclick="func">
+                <input type="button" class="button button_hint" value="Hint">
+                <input type="button" class="button button_best_move" value="Show Best Move">
+                <input type="submit" class="button button_new" value="New Position" id="greet" onclick="func">
+            </form>
+        </div>
+    </div>
+    <div class="container3">
+{% endblock %}

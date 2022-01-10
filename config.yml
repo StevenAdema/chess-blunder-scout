@@ -1,9 +1,0 @@
-results:
-  - win
-  - stalemate
-  - resigned
-  - checkmated
-  - abandoned
-  - timeout
-  - repetition
-  

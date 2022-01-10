@@ -28,7 +28,7 @@ class PGNReader:
         self.get_games(self.username, self.lookback)
         self.parse_player_stats()
         self.format_df()
-        self.df = self.df.head(5)
+        self.df = self.df.head(1)
         self.df_moves = self.get_move_scores()
         self.df = pd.merge(self.df_moves, self.df, on='url', how='left')
 

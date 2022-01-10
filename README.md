@@ -1,24 +1,36 @@
-![Chess.com AoE Board](/static/blunder_scout.png)
-A Web app built with Python + Flask to fetch a random blunder and challenge you to find the best move.
+# FlaskIntroduction
 
-## Screenshot
+This repo has been updated to work with `Python v3.8` and up.
 
-![Chess.com AoE Board](/static/blunder_scout_screenshot.png)
+### How To Run
+1. Install `virtualenv`:
+```
+$ pip install virtualenv
+```
 
-<br/>
+2. Open a terminal in the project root directory and run:
+```
+$ virtualenv env
+```
 
-## Installation
+3. Then run the command:
+```
+$ .\env\Scripts\activate
+```
 
-1. In Chess.com settings, set the piece set to 'Lolz'
-2. Got to chrome://extensions/
-3. Enable developer mode
-4. Load unpacked directory
-5. Start a new game vs a bot/engine
+4. Then install the dependencies:
+```
+$ (env) pip install -r requirements.txt
+```
 
-<br/>
+5. Finally start the web server:
+```
+$ (env) python app.py
+```
 
-### Disclaimer
+This server will start on port 5000 by default. You can change this in `app.py` by changing the following line to this:
 
-aoe-chess.com-pieces recognizes and respects Microsoft's copyrights and is in accordance with its fair use application. Source material for the pieces originates from Age of Empires II DE.
-
- Replication of Microsoft copyright and trademarks without clear acknowledgement or producing a competing creative work violates fair use policy.
+```python
+if __name__ == "__main__":
+    app.run(debug=True, port=<desired port>)
+```

@@ -1,0 +1,24 @@
+url|fen_x|move_no|my_move_uci|my_move_score|best_move_uci|best_move_score|difs
+https://www.chess.com/game/live/8366662779|r1bqkbnr/pppp1ppp/2n5/4p3/4P3/2P2N2/PP1P1PPP/RNBQKB1R b KQkq - 0 3|3|f8c5|-123|d7d5|10|133
+https://www.chess.com/game/live/8366662779|r1bqk1nr/1pppnppp/1b6/pP2N3/P3P3/2P5/3P1PPP/RNBQKB1R b KQkq - 0 7|7|d7d6|-228|g8f6|-89|139
+https://www.chess.com/game/live/8366662779|r1bqk2r/1pp1n2p/3p1p2/pPb5/P1N1P3/2P5/3N1PPP/R2QKB1R b KQkq - 2 13|13|b7b6|-338|e7g6|-197|141
+https://www.chess.com/game/live/8384635841|r2qkb1r/ppp2ppp/3p1n2/n2Pp3/2B1P1b1/2P2N2/PP3PPP/RNBQK2R w KQkq - 1 7|6|b1a3|-200|c4f1|174|374
+https://www.chess.com/game/live/8384635841|r2q1rk1/pp2bppp/2pp4/P2Pp3/8/N1P2Q2/P4PPP/R1B2RK1 w - - 0 14|14|c3c4|576|a1b1|769|193
+https://www.chess.com/game/live/8384635841|r4rk1/pp2bppp/2pp4/q2Pp3/2P5/N4Q2/P4PPP/R1B2RK1 w - - 0 15|14|f3e3|260|a1b1|534|274
+https://www.chess.com/game/live/8384635841|r4rk1/pp2bppp/3p4/3qp3/8/N3Q3/P4PPP/R1B2RK1 w - - 0 17|16|e3b3|111|c1b2|221|110
+https://www.chess.com/game/live/8385805053|r1bqkbnr/pp1ppppp/2n5/2p5/2B1P3/8/PPPP1PPP/RNBQK1NR w KQkq - 2 3|2|d1f3|-94|g1f3|0|94
+https://www.chess.com/game/live/8385805053|r1bqkb1r/pp1ppppp/2n2n2/2p5/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 4 4|4|c2c3|-220|d2d3|-76|144
+https://www.chess.com/game/live/8385805053|r1bqkb1r/pp1ppp1p/2n2np1/2p5/2B1P3/2P2Q2/PP1P1PPP/RNB1K1NR w KQkq - 0 5|4|d2d4|-204|d2d3|-112|92
+https://www.chess.com/game/live/8385805053|r1bqkb1r/pp1ppp1p/5np1/8/2BnP3/5Q2/PP3PPP/RNB1K1NR w KQkq - 0 7|6|f3c3|-602|f3d3|-131|471
+https://www.chess.com/game/live/8385805053|r1bqkb1r/pp1p1p1p/5np1/4p3/2BnP3/2Q5/PP3PPP/RNB1K1NR w KQkq - 0 8|8|c1g5|-822|c3g3|-623|199
+https://www.chess.com/game/live/8385805053|r1bqk2r/pp1pbp1p/5np1/4p1B1/2BnP3/2Q5/PP3PPP/RN2K1NR w KQkq - 2 9|8|f2f4|-912|g5f6|-178|734
+https://www.chess.com/game/live/8385805053|r1bBk2r/pp1p1p1p/6p1/4p3/2B2P2/2n5/PP1K2PP/nN4NR w kq - 0 13|12|d2c3|-157|b1c3|263|420
+https://www.chess.com/game/live/8385805053|r1bk3r/pp1p1p1p/6p1/4p3/2B2P2/2K5/PP4PP/nN4NR w - - 0 14|14|c4f7|-517|b1a3|-164|353
+https://www.chess.com/game/live/8385805053|r1bk3r/pp1p1B1p/6p1/8/5p2/2K5/PP4PP/nN4NR w - - 0 15|14|b2b3|-536|g1f3|-150|386
+https://www.chess.com/game/live/8386430801|r1bqkb1r/pppp1ppp/2n2n2/4p3/3PP3/2P2N2/PP3PPP/RNBQKB1R b KQkq - 0 4|4|f8d6|-152|f6e4|0|152
+https://www.chess.com/game/live/8386430801|rnbqk2r/ppppbppp/5n2/3Pp1B1/4P3/2P2N2/PP1N1PPP/R2QKB1R b KQkq - 4 7|7|c7c6|-192|d7d6|-5|187
+https://www.chess.com/game/live/8386430801|rnbqk2r/pp1p1ppp/8/3pP3/4P3/2P5/PP1N2PP/R2QKB1R b KQkq - 0 11|11|d5e4|-121|b8c6|0|121
+https://www.chess.com/game/live/8386430801|rnbq1rk1/pp1p1ppp/8/4P2Q/4N3/2P5/PP4PP/R3KB1R b KQ - 0 13|13|f8e8|-621|d7d5|-90|531
+https://www.chess.com/game/live/8386430801|rnbqr1k1/pp1p1ppp/8/4P2Q/4N3/2PB4/PP4PP/R3K2R b KQ - 2 14|14|b8c6|-878|g7g6|-62|816
+https://www.chess.com/game/live/8386999149|r2q1rk1/1p3ppp/p3pn2/2bpB1P1/8/2NQP2P/PPP2P2/R3K2R b KQ - 0 13|13|f6e4|-70|f6d7|215|285
+https://www.chess.com/game/live/8386999149|r2q1rk1/1p3ppp/p3p3/2b1B1P1/4Q3/4P2P/PPP2P2/R3K2R b KQ - 0 15|15|d8d5|-374|d8g5|-57|317
