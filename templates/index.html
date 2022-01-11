@@ -9,13 +9,10 @@
         <img src="{{ url_for('static', filename='blunder_scout.png') }}">
     </div>
     <h3 class="simple_text">Correct a random blunder from a previous game</h3>
-
+    <br>
     <div class="form_container">
-        <form action="blunders" method="post" class="form">
-            {% for message in get_flashed_messages() %}
-                 <p class="simple_text">{{ message }}</p>
-             {% endfor %}
-            <input type="text" name="name_input" placeholder="your chess.com username">
+        <form action="blunders" method="post" class="form" autocomplete="off">
+            <input type="text" id="name_input" placeholder="your chess.com username" autocomplete="off">
             <input type="submit" value="SUBMIT" id="greet" onclick="func">
         </form>
     </div>

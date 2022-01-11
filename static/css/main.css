@@ -2,12 +2,17 @@ html{
     background-color: #182527;
 }
 
+h3 {
+    margin-top:-30px;
+    font-weight: 80;
+}
 body {
     text-align: center;
+    font-family: 'PT Sans', sans-serif;
 }
 p {
     color: white;
-    font-family: Shanti;
+    font-family: 'PT Sans', sans-serif;
     font-size: 1.2em;
     display: center;
     margin:  20px;
@@ -21,25 +26,27 @@ margin-top: -50px;
 margin-bottom: -30px;
 }
 
-.simple_text { 
-    font-family: Helvetica;
+a {
+    font-family: 'PT Sans', sans-serif;
     color: white;
-    font-weight: 100;
+    text-decoration: none;
+}
+.simple_text { 
+    font-family: 'PT Sans', sans-serif;
+    color: white;
+    /* font-weight: 100; */
 }
 
-.form {
-    background-color: #222831;
-    width: auto;
-    margin-top:  20px;
+.form_container {
+    width: 450px;
     margin-left: auto;
     margin-right: auto;
-    padding: 20px;
-    text-align: center;
+    /* background-color: #1a1a1a; */
+    padding: 10px;
 }
 
-
 img {
-    margin: 60px 0 30px 0;
+    margin: 50px 0 30px 0;
     width: 500px;
    -webkit-filter: invert(1);
    filter: invert(1);
@@ -53,37 +60,68 @@ input {
   height: 50px;
   border: none;
   border-radius: 15px;
-  font-family: Shanti;
+  font-family: 'PT Sans', sans-serif;
   font-size: 1.3em;
   text-align: center;
   display: block;
   border: solid 7px #222831;
   background-color: #e7e7e7;
+  font-weight: bold;
 }
 
-input:focus {
+#name_input:focus {
     outline: none;
-    border: solid 7px #009790;
+    border: solid 7px #87abb4;
     background-color: #ffffff;
     transition: 0.5s; 
     z-index: -1;
-
 }
 
 #greet {
-    background-color: #393E46;
+    background-color: #4F6C73;
     border:  none;
     width:  100%;
     color: white;
 }
 
 #greet:hover {
-    background-color: #009790;
+    background-color: #87abb4;
     transition: 0.2s; 
+    transform: scale(1.03);
+}
+
+#temp {
+    background-color: #1a1a1a;
+    color: #1a1a1a;
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+    border-radius: 15px;
+}
+
+#hidden_div_correct {
+    background-color: #20ab8b;
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+    color: white;
+    border-radius: 15px;
+}
+
+#hidden_div_wrong {
+    background-color: #8f5c6d;
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+    color: white;
+    border-radius: 15px;
 }
 
 .button {
-  width:  95%;
+  width:  100%;
   color: white;
   margin-left: auto;
   margin-right: auto;
@@ -91,16 +129,17 @@ input:focus {
   height: 50px;
   border: none;
   border-radius: 10px;
-  font-family: Shanti;
+  font-family: 'PT Sans', sans-serif;
   font-size: 1.3em;
   text-align: center;
   display: block;
-  background-color: #393E46;
+  background-color: #4F6C73;
 }
 
 .button:hover{
-    background-color: #009790;
+    background-color: #87abb4;
     transition: 0.2s; 
+    transform: scale(1.03);
 }
 
 .button_hint {
@@ -116,7 +155,7 @@ input:focus {
     font-size: 1.3em;
     text-align: center;
     display: block;
-    background-color: #393E46;
+    background-color: #4F6C73;
   }
 
   .button_best_move {
@@ -127,11 +166,11 @@ input:focus {
     height: 50px;
     border: none;
     border-radius: 10px;
-    font-family: Shanti;
+    font-family: 'PT Sans', sans-serif;
     font-size: 1.3em;
     text-align: center;
     display: block;
-    background-color: #394046;
+    background-color: #4F6C73;
   }
 
 .col {
@@ -142,16 +181,12 @@ input:focus {
     width: 60%;
     float: left;
     text-align:  right;
-    /* border-style: solid;
-    border-color: red; */
 }
 
 .container2 {
     width: 30%;
     float: left;
     padding: 20px;
-    /* border-style: solid;
-    border-color: red; */
     margin-top:0%;
 
 }
@@ -168,3 +203,43 @@ svg {
     -webkit-filter: drop-shadow( 15px 15px 15px rgba(0, 0, 0, .7));
   ;
 }
+
+.game_info {
+  display: grid;
+  width: 95%;
+  border-radius: 2px;
+  grid-template-areas:
+  'div0 div0'
+  'div01 div01'
+  'div1 div1'
+  'div2 div2'
+  'div3 div3'
+  'div4 div5'
+  'div6 div7';
+  grid-gap: 0px;
+  background-color: #1a1a1a;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  -webkit-filter: drop-shadow( 15px 15px 15px rgba(0, 0, 0, .7));
+}
+.div1, .div2, .div3, .div4, 
+.div5, .div6, .div7 {
+  background-color: #232a2c;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 1.2em;
+  color: white;
+}
+
+.div0 { grid-area: div0; }
+.div01 { grid-area: div01; }
+.div1 { grid-area: div1; }
+.div2 { grid-area: div2; margin:0px;}
+.div3 { grid-area: div3; }
+.div4 { grid-area: div4; }
+.div5 { grid-area: div5; }
+.div6 { grid-area: div6; }
+.div7 { grid-area: div7; }
+

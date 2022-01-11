@@ -11,10 +11,7 @@ var svg = '{{ svg }}';
     <div class="aligned">
         <img src="{{ url_for('static', filename='blunder_scout.png') }}">
     </div>
-{% for message in get_flashed_messages() %}
-                     <p class="simple_text">{{ message }}
-                     </p>
-                 {% endfor %}
+    <h3 class="simple_text">Correct a random blunder from a previous game</h3>
 
     <div class="parent_container">
         <div class="container1">
@@ -23,14 +20,49 @@ var svg = '{{ svg }}';
         </div>
 
         <div class="container2">
-            <form action="blunders" method="post">
-                <input type="text" name="name_input" placeholder="select best move e.g. Nf3">
-                <input type="button" class="button button_submit"value="Submit Move" id="greet" onclick="func">
+            <div class="game_info">
+                <div class="div0">
+            <form action="blunders" method="post" class="form_div" autocomplete="off">
+                <input type="text" id="name_input" name="name_input" placeholder="select best move e.g. Nf3" autocomplete="off">
+                <input type="button" class="button button_submit" value="Submit Move" id="move_submit" onclick="showDiv()"/>
                 <input type="button" class="button button_hint" value="Hint">
                 <input type="button" class="button button_best_move" value="Show Best Move">
-                <input type="submit" class="button button_new" value="New Position" id="greet" onclick="func">
+                <input type="submit" class="button button_new" value="New Position" id="greet">
+                <div style="display:block;" id="temp">.</div>
+                <div style="display:none;" id="hidden_div_correct">Correct! Well done :)</div>
+                <div style="display:none;" id="hidden_div_wrong">Nope! Try again...</div>
             </form>
+            <br>
+        </div>
+<div class="div01"></div>
+<div class="div1"><a href="{{ url }}" target="_blank">{{ url }}</a></div>
+<div class="div2">{{ date }}</div>
+<div class="div3">black to play on move {{ move_no }}</div>
+<div class="div4">{{ user }}</div>
+<div class="div5">{{ user_rating }}</div>
+<div class="div6">{{ opp }}</div>
+<div class="div7">{{ opp_rating }}</div>
+</div>
         </div>
     </div>
     <div class="container3">
+
+<script>
+function showDiv() { 
+   let bm = {{ best_move|tojson }};
+   let guess = document.getElementById('name_input').value;
+    console.log(guess)
+    console.log(bm)
+   if (guess == bm) {
+   document.getElementById('hidden_div_correct').style.display = "block";
+   document.getElementById('hidden_div_wrong').style.display = "none";
+   document.getElementById('temp').style.display = "none";
+   } else{
+   document.getElementById('hidden_div_wrong').style.display = "block";
+   document.getElementById('hidden_div_correct').style.display = "none";
+   document.getElementById('temp').style.display = "none";
+   }
+}
+
+</script>
 {% endblock %}

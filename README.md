@@ -12,7 +12,7 @@ Correct blunders from previous games on chess.com.
 
 1. ``` git clone https://github.com/StevenAdema/blunder-scout.git ```
 2. ``` pip install -r requirements.txt ```
-3. ```env\scripts\activate```
+3. ```env\Scripts\activate```
 4. ```python app.py```
 5. Open http://127.0.0.1:5000/ in the browser
 
