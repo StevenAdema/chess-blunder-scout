@@ -25,8 +25,8 @@ var svg = '{{ svg }}';
             <form action="blunders" method="post" class="form_div" autocomplete="off">
                 <input type="text" id="name_input" name="name_input" placeholder="select best move e.g. Nf3" autocomplete="off">
                 <input type="button" class="button button_submit" value="Submit Move" id="move_submit" onclick="showDiv()"/>
-                <input type="button" class="button button_hint" value="Hint">
-                <input type="button" class="button button_best_move" value="Show Best Move">
+                <input type="button" class="button button_hint" value="Hint" onclick="showHint()">
+                <input type="button" class="button button_best_move" value="Show Best Move" onclick="showBestMove()">
                 <input type="submit" class="button button_new" value="New Position" id="greet">
                 <div style="display:block;" id="temp">.</div>
                 <div style="display:none;" id="hidden_div_correct">Correct! Well done :)</div>
@@ -35,33 +35,46 @@ var svg = '{{ svg }}';
             <br>
         </div>
 <div class="div01"></div>
-<div class="div1"><a href="{{ url }}" target="_blank">{{ url }}</a></div>
-<div class="div2">{{ date }}</div>
-<div class="div3">black to play on move {{ move_no }}</div>
-<div class="div4">{{ user }}</div>
-<div class="div5">{{ user_rating }}</div>
-<div class="div6">{{ opp }}</div>
-<div class="div7">{{ opp_rating }}</div>
+<div class="div1"><a href="{{ url }}" target="_blank">🔗 Game from {{ date }}</a></div>
+<div class="div4">{{ user }} ({{ user_rating }})</div>
+<div class="div6">{{ opp }} ({{ opp_rating }})</div>
 </div>
         </div>
     </div>
     <div class="container3">
 
 <script>
+function onLoad() {
+    document.getElementsByClassName("arrow")[0].style.opacity="0";
+    document.getElementsByClassName("arrow")[1].style.opacity="0";
+}
+
 function showDiv() { 
    let bm = {{ best_move|tojson }};
    let guess = document.getElementById('name_input').value;
-    console.log(guess)
-    console.log(bm)
    if (guess == bm) {
-   document.getElementById('hidden_div_correct').style.display = "block";
-   document.getElementById('hidden_div_wrong').style.display = "none";
-   document.getElementById('temp').style.display = "none";
+        document.getElementById('hidden_div_correct').style.display = "block";
+        document.getElementById('hidden_div_wrong').style.display = "none";
+        document.getElementById('temp').style.display = "none";
    } else{
-   document.getElementById('hidden_div_wrong').style.display = "block";
-   document.getElementById('hidden_div_correct').style.display = "none";
-   document.getElementById('temp').style.display = "none";
+        document.getElementById('hidden_div_wrong').style.display = "block";
+        document.getElementById('hidden_div_correct').style.display = "none";
+        document.getElementById('temp').style.display = "none";
    }
+}
+
+function showHint(){
+    let best_move = {{ best_move_uci|tojson }};
+    console.log(best_move);
+    let best_move_square = best_move.substring(0, 2);
+    console.log(best_move_square);
+
+    document.getElementsByClassName(best_move_square)[0].style.fill="#8f5c6d";
+}
+
+function showBestMove() {
+    document.getElementsByClassName("arrow")[0].style.opacity="0.6";
+    document.getElementsByClassName("arrow")[1].style.opacity="0.6";
 }
 
 </script>

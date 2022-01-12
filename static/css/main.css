@@ -64,7 +64,7 @@ input {
   font-size: 1.3em;
   text-align: center;
   display: block;
-  border: solid 7px #222831;
+  border: solid 7px #1d1d1d;
   background-color: #e7e7e7;
   font-weight: bold;
 }
@@ -91,7 +91,7 @@ input {
 }
 
 #temp {
-    background-color: #1a1a1a;
+    background-color: #1d1d1d;
     color: #1a1a1a;
     text-align: center;
     padding: 20px 0;
@@ -205,19 +205,11 @@ svg {
 }
 
 .game_info {
-  display: grid;
-  width: 95%;
+  display: flexbox;
+  width: 85%;
   border-radius: 2px;
-  grid-template-areas:
-  'div0 div0'
-  'div01 div01'
-  'div1 div1'
-  'div2 div2'
-  'div3 div3'
-  'div4 div5'
-  'div6 div7';
   grid-gap: 0px;
-  background-color: #1a1a1a;
+  background-color: #1d1d1d;
   padding-top: 20px;
   padding-bottom: 20px;
   padding-left: 10px;
@@ -230,16 +222,10 @@ svg {
   text-align: center;
   padding: 10px 0;
   font-size: 1.2em;
-  color: white;
+  color: rgb(196, 213, 218);
 }
 
-.div0 { grid-area: div0; }
-.div01 { grid-area: div01; }
-.div1 { grid-area: div1; }
-.div2 { grid-area: div2; margin:0px;}
-.div3 { grid-area: div3; }
-.div4 { grid-area: div4; }
-.div5 { grid-area: div5; }
-.div6 { grid-area: div6; }
-.div7 { grid-area: div7; }
-
+a:hover {
+    color:  #5db4ca;
+    font-weight: bold;
+}

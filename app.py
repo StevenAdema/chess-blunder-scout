@@ -28,8 +28,8 @@ def greeter():
     df = df[df['difs'] > 80]
     df = df.sample()
     move_no = df['move_no'].values[0]
-    my_move = str(df['my_move_uci'].values[0])
-    best_move = str(df['best_move_uci'].values[0])
+    best_move = str(df['best_move_san'].values[0])
+    best_move_uci = str(df['best_move_uci'].values[0])
     fen = df['fen_x'].values[0]
     url = df['url'].values[0]
     user = df['user_username'].values[0]
@@ -40,7 +40,7 @@ def greeter():
     url = df['url'].values[0]
     date = df['end_time'].values[0]
     date = pd.to_datetime(str(date))
-    date = date.strftime('%d-%b-%Y')
+    date = date.strftime('%d.%m.%Y')
     print(best_move)
     content = {
         'url':url,
@@ -50,11 +50,21 @@ def greeter():
         'opp_rating':opp_rating,
         'move_no':move_no,
         'date':date,
-        'best_move':best_move
+        'best_move':best_move,
+        'best_move_uci':best_move_uci
+
     }
 
     board = chess.Board(fen) 
-    board_svg = chess.svg.board(board, colors={'square light': '#aeced6', 'square dark': '#4f6c73'})
+
+    bm_from = chess.parse_square(name=best_move_uci[0:2])
+    bm_to = chess.parse_square(name=best_move_uci[2:4])
+
+    board_svg = chess.svg.board(board, colors={'square light': '#aeced6', 'square dark': '#4f6c73'}, arrows=[(bm_from,bm_to)])
+    file = open("svg.txt", "w")
+    file.write(board_svg)
+    file.close()
+
 
     flash("Position from game played on Full game details here: " + url)
     return render_template("blunders.html", svg=board_svg, **content)
