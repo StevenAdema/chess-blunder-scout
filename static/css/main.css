@@ -90,36 +90,6 @@ input {
     transform: scale(1.03);
 }
 
-#temp {
-    background-color: #1d1d1d;
-    color: #1a1a1a;
-    text-align: center;
-    padding: 20px 0;
-    margin-bottom: 10px;
-    font-size: 1.3em;
-    border-radius: 15px;
-}
-
-#hidden_div_correct {
-    background-color: #20ab8b;
-    text-align: center;
-    padding: 20px 0;
-    margin-bottom: 10px;
-    font-size: 1.3em;
-    color: white;
-    border-radius: 15px;
-}
-
-#hidden_div_wrong {
-    background-color: #8f5c6d;
-    text-align: center;
-    padding: 20px 0;
-    margin-bottom: 10px;
-    font-size: 1.3em;
-    color: white;
-    border-radius: 15px;
-}
-
 .button {
   width:  100%;
   color: white;
@@ -216,13 +186,16 @@ svg {
   padding-right: 10px;
   -webkit-filter: drop-shadow( 15px 15px 15px rgba(0, 0, 0, .7));
 }
-.div1, .div2, .div3, .div4, 
-.div5, .div6, .div7 {
+.div1, .div2, .div3{
   background-color: #232a2c;
   text-align: center;
-  padding: 10px 0;
-  font-size: 1.2em;
+  padding: 5px 0;
+  font-size: 1.1em;
   color: rgb(196, 213, 218);
+}
+
+.div3{
+padding-top: 0px;
 }
 
 a:hover {

@@ -28,16 +28,13 @@ var svg = '{{ svg }}';
                 <input type="button" class="button button_hint" value="Hint" onclick="showHint()">
                 <input type="button" class="button button_best_move" value="Show Best Move" onclick="showBestMove()">
                 <input type="submit" class="button button_new" value="New Position" id="greet">
-                <div style="display:block;" id="temp">.</div>
-                <div style="display:none;" id="hidden_div_correct">Correct! Well done :)</div>
-                <div style="display:none;" id="hidden_div_wrong">Nope! Try again...</div>
             </form>
             <br>
         </div>
 <div class="div01"></div>
 <div class="div1"><a href="{{ url }}" target="_blank">🔗 Game from {{ date }}</a></div>
-<div class="div4">{{ user }} ({{ user_rating }})</div>
-<div class="div6">{{ opp }} ({{ opp_rating }})</div>
+<div class="div2">{{ user }} ({{ user_rating }})</div>
+<div class="div3">{{ opp }} ({{ opp_rating }})</div>
 </div>
         </div>
     </div>
@@ -53,13 +50,11 @@ function showDiv() {
    let bm = {{ best_move|tojson }};
    let guess = document.getElementById('name_input').value;
    if (guess == bm) {
-        document.getElementById('hidden_div_correct').style.display = "block";
-        document.getElementById('hidden_div_wrong').style.display = "none";
-        document.getElementById('temp').style.display = "none";
+        document.getElementById('move_submit').value = "Correct! Well done :)";
+        document.getElementById('move_submit').style.backgroundColor = "#20ab8b";
    } else{
-        document.getElementById('hidden_div_wrong').style.display = "block";
-        document.getElementById('hidden_div_correct').style.display = "none";
-        document.getElementById('temp').style.display = "none";
+        document.getElementById('move_submit').value = ":/ Try another move...";
+        document.getElementById('move_submit').style.backgroundColor = "#8f5c6d";
    }
 }
 
@@ -70,11 +65,13 @@ function showHint(){
     console.log(best_move_square);
 
     document.getElementsByClassName(best_move_square)[0].style.fill="#8f5c6d";
+    document.getElementsByClassName("button button_hint")[0].style.backgroundColor="#8f5c6d";
 }
 
 function showBestMove() {
     document.getElementsByClassName("arrow")[0].style.opacity="0.6";
     document.getElementsByClassName("arrow")[1].style.opacity="0.6";
+    document.getElementsByClassName("button button_best_move")[0].style.backgroundColor="#8f5c6d";
 }
 
 </script>
