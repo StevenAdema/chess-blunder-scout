@@ -19,7 +19,7 @@ matplotlib==3.4.3
 numpy==1.21.3
 pandas==1.3.5
 Pillow==8.4.0
-pipenv==2021.11.23
+pipenv==2022.1.8
 platformdirs==2.4.1
 psutil==5.9.0
 pyparsing==3.0.1

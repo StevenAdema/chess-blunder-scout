@@ -99,7 +99,7 @@ input {
   height: 50px;
   border: none;
   border-radius: 10px;
-  font-family: 'PT Sans', sans-serif;
+  /* font-family: 'PT Sans', sans-serif; */
   font-size: 1.3em;
   text-align: center;
   display: block;

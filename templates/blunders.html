@@ -32,7 +32,7 @@ var svg = '{{ svg }}';
             <br>
         </div>
 <div class="div01"></div>
-<div class="div1"><a href="{{ url }}" target="_blank">🔗 Game from {{ date }}</a></div>
+<div class="div1"><a href="{{ url }}" target="_blank">Game from {{ date }} <i class="fas fa-external-link-alt"></i></a></div>
 <div class="div2">{{ user }} ({{ user_rating }})</div>
 <div class="div3">{{ opp }} ({{ opp_rating }})</div>
 </div>
@@ -41,6 +41,12 @@ var svg = '{{ svg }}';
     <div class="container3">
 
 <script>
+let toggle = 1;
+
+function switchToggle(n) {
+    toggle = n;
+}
+
 function onLoad() {
     document.getElementsByClassName("arrow")[0].style.opacity="0";
     document.getElementsByClassName("arrow")[1].style.opacity="0";
@@ -53,25 +59,46 @@ function showDiv() {
         document.getElementById('move_submit').value = "Correct! Well done :)";
         document.getElementById('move_submit').style.backgroundColor = "#20ab8b";
    } else{
-        document.getElementById('move_submit').value = ":/ Try another move...";
+        document.getElementById('move_submit').value = "Try another move...";
         document.getElementById('move_submit').style.backgroundColor = "#8f5c6d";
    }
 }
 
 function showHint(){
     let best_move = {{ best_move_uci|tojson }};
-    console.log(best_move);
     let best_move_square = best_move.substring(0, 2);
-    console.log(best_move_square);
+    let original_square_color = ""; 
+    let counter = 0;
+    
+    var square_color = document.querySelectorAll("[class*=" + CSS.escape(best_move_square) + "]")[0];
+    square_color = window.getComputedStyle(square_color).fill;
+    counter = counter + 1;
+    if (square_color == "rgb(79, 108, 115)" && counter == 1) {
+        console.log('IFIF');
+        original_square_color = "rgb(79, 108, 115)";
+    }
 
-    document.getElementsByClassName(best_move_square)[0].style.fill="#8f5c6d";
-    document.getElementsByClassName("button button_hint")[0].style.backgroundColor="#8f5c6d";
+    if (square_color != "rgb(143, 92, 109)") {
+        document.getElementsByClassName(best_move_square)[0].style.fill="#8f5c6d";
+        document.getElementsByClassName("button button_hint")[0].style.backgroundColor="#8f5c6d";
+    } else {
+        document.getElementsByClassName(best_move_square)[0].style.fill=original_square_color;
+        document.getElementsByClassName("button button_hint")[0].style.backgroundColor=original_square_color;
+    }
 }
 
 function showBestMove() {
+    if (toggle == 1) {
     document.getElementsByClassName("arrow")[0].style.opacity="0.6";
     document.getElementsByClassName("arrow")[1].style.opacity="0.6";
     document.getElementsByClassName("button button_best_move")[0].style.backgroundColor="#8f5c6d";
+    switchToggle(2);
+    } else {
+    document.getElementsByClassName("arrow")[0].style.opacity="0";
+    document.getElementsByClassName("arrow")[1].style.opacity="0";
+    document.getElementsByClassName("button button_best_move")[0].style.backgroundColor="#4F6C73";
+    switchToggle(1);
+    }
 }
 
 </script>

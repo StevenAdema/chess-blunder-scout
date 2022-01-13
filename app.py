@@ -7,8 +7,10 @@ import chess
 import chess.pgn
 import chess.engine
 import chess.svg
+from flask_fontawesome import FontAwesome
 
 app = Flask(__name__)
+fa = FontAwesome(app)
 app.static_folder = 'static/css' 
 app.secret_key = "poppadontpreach"
 app.config['TEMPLATES_AUTO_RELOAD'] = True
