@@ -5,14 +5,10 @@
 {% endblock %}
 
 {% block body %}
-<script>
-var svg = '{{ svg }}';
-</script>
     <div class="aligned">
-        <img src="{{ url_for('static', filename='blunder_scout.png') }}">
+        <img src="{{ url_for('static', filename='blunder_scout.png') }}" id="logo">
     </div>
     <h3 class="simple_text">Correct a random blunder from a previous game</h3>
-
     <div class="parent_container">
         <div class="container1">
             <br>
@@ -22,47 +18,76 @@ var svg = '{{ svg }}';
         <div class="container2">
             <div class="game_info">
                 <div class="div0">
-            <form action="blunders" method="post" class="form_div" autocomplete="off">
+            <form action="blunders" method="post" id= "myForm" class="form_div" autocomplete="off">
                 <input type="text" id="name_input" name="name_input" placeholder="select best move e.g. Nf3" autocomplete="off">
                 <input type="button" class="button button_submit" value="Submit Move" id="move_submit" onclick="showDiv()"/>
                 <input type="button" class="button button_hint" value="Hint" onclick="showHint()">
-                <input type="button" class="button button_best_move" value="Show Best Move" onclick="showBestMove()">
-                <input type="submit" class="button button_new" value="New Position" id="greet">
+                <input type="button" class="button button_best_move" value="Best Move" onclick="showBestMove()">
+                <input type="button" class="button button_my_move" value="My Move" onclick="showMyMove()">
+                <input type="button" class="button button_new" value="New Position" onclick="reload_page()">
             </form>
             <br>
         </div>
+        <div class="loader"></div>
+        <img src="{{ url_for('static', filename='chess.gif') }}" id="loader"></img>
 <div class="div01"></div>
 <div class="div1"><a href="{{ url }}" target="_blank">Game from {{ date }} <i class="fas fa-external-link-alt"></i></a></div>
 <div class="div2">{{ user }} ({{ user_rating }})</div>
 <div class="div3">{{ opp }} ({{ opp_rating }})</div>
 </div>
-        </div>
+    </div>
     </div>
     <div class="container3">
-
+        </div>
+        
 <script>
 let toggle = 1;
+let toggle2 = 1;
+
+$(window).load(function(){
+    $('div.loading').fadeOut(1000);
+});
+
+document.getElementById("myForm").onkeypress = function(e) {
+  var key = e.charCode || e.keyCode || 0;     
+  if (key == 13) {
+    showDiv();
+    e.preventDefault();
+  }
+}
 
 function switchToggle(n) {
     toggle = n;
 }
 
+function switchToggle2(n) {
+    toggle2 = n;
+}
+
+
 function onLoad() {
     document.getElementsByClassName("arrow")[0].style.opacity="0";
     document.getElementsByClassName("arrow")[1].style.opacity="0";
+    document.getElementsByClassName("arrow")[2].style.opacity="0";
+    document.getElementsByClassName("arrow")[3].style.opacity="0";
 }
 
+
 function showDiv() { 
-   let bm = {{ best_move|tojson }};
+   let bm = {{  best_move|tojson }};
    let guess = document.getElementById('name_input').value;
    if (guess == bm) {
         document.getElementById('move_submit').value = "Correct! Well done :)";
         document.getElementById('move_submit').style.backgroundColor = "#20ab8b";
+        document.getElementsByClassName("arrow")[0].style.opacity="0.6";
+        document.getElementsByClassName("arrow")[1].style.opacity="0.6";
+
    } else{
         document.getElementById('move_submit').value = "Try another move...";
-        document.getElementById('move_submit').style.backgroundColor = "#8f5c6d";
+        document.getElementById('move_submit').style.backgroundColor = "#8f5c6d";      
    }
 }
+
 
 function showHint(){
     let best_move = {{ best_move_uci|tojson }};
@@ -87,19 +112,39 @@ function showHint(){
     }
 }
 
+
 function showBestMove() {
     if (toggle == 1) {
-    document.getElementsByClassName("arrow")[0].style.opacity="0.6";
-    document.getElementsByClassName("arrow")[1].style.opacity="0.6";
-    document.getElementsByClassName("button button_best_move")[0].style.backgroundColor="#8f5c6d";
-    switchToggle(2);
+        document.getElementsByClassName("arrow")[0].style.opacity="0.7";
+        document.getElementsByClassName("arrow")[1].style.opacity="0.7";
+        document.getElementsByClassName("button button_best_move")[0].style.backgroundColor="#8f5c6d";
+        switchToggle(2);
     } else {
-    document.getElementsByClassName("arrow")[0].style.opacity="0";
-    document.getElementsByClassName("arrow")[1].style.opacity="0";
-    document.getElementsByClassName("button button_best_move")[0].style.backgroundColor="#4F6C73";
-    switchToggle(1);
+        document.getElementsByClassName("arrow")[0].style.opacity="0";
+        document.getElementsByClassName("arrow")[1].style.opacity="0";
+        document.getElementsByClassName("button button_best_move")[0].style.backgroundColor="#4F6C73";
+        switchToggle(1);
     }
 }
 
+function showMyMove() {
+    if (toggle2 == 1) {
+        document.getElementsByClassName("arrow")[2].style.opacity="0.5";
+        document.getElementsByClassName("arrow")[3].style.opacity="0.5";
+        document.getElementsByClassName("button button_my_move")[0].style.backgroundColor="#8f5c6d";
+        switchToggle2(2);
+    } else {
+        document.getElementsByClassName("arrow")[2].style.opacity="0";
+        document.getElementsByClassName("arrow")[3].style.opacity="0";
+        document.getElementsByClassName("button button_my_move")[0].style.backgroundColor="#4F6C73";
+        switchToggle2(1);
+    }
+}
+
+function reload_page() {
+location.reload();
+}
+
 </script>
+
 {% endblock %}

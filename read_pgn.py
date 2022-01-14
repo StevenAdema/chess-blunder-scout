@@ -14,22 +14,24 @@ pd.set_option('display.max_colwidth', 300)
 
 class PGNReader:
     engine_path = 'C:/Users/Steven/Documents/Unsorted/stockfish_14.1_win_x64_avx2.exe'
-    eval_time = 16  # Set time for move evaluation
-    limit = 30 # move limit for analysis
+    eval_time = 15  # Set time for move evaluation
+    limit = 60 # move limit for analysis
     df_cols = ['url', 'pgn', 'time_control', 'end_time', 'rated', 'time_class',
                'user_rating', 'user_username', 'user_result', 'user_color', 'opp_rating',
                'opp_username', 'opp_result', 'opp_color']
 
     df = pd.DataFrame(columns=df_cols)
 
-    def __init__(self, username, lookback):
+    def __init__(self, username, lookback, time_control='600', limit=False):
         self.username = username
         self.lookback = lookback
+        self.time_control = time_control
         self.get_games(self.username, self.lookback)
+        self.filter_time_control(self.time_control)
         self.parse_player_stats()
         self.format_df()
-        self.df = self.df.head(1)
         self.df_moves = self.get_move_scores()
+        self.df = self.get_sample()
         self.df = pd.merge(self.df_moves, self.df, on='url', how='left')
 
     def get_games(self, username, lookback):
@@ -71,22 +73,29 @@ class PGNReader:
         self.df = self.df.loc[self.df['time_control'] == time_control]
         self.df.reset_index(drop=True, inplace=True)
 
+    def get_sample(self):
+        """ get a random single row from self.df"""
+        df = self.df.sample()
+        return df
+
     def get_move_scores(self):
+        """ calculate the strength of each move made, compare to stength of best move"""
+        self.df = self.df.sample()
+        self.df = self.df.reset_index()
         url, fen, move_no, my_move_san, my_move_uci, my_move_score, best_move_san, best_move_uci, best_move_score, difs = [], [], [], [], [], [], [], [], [], []
 
         def get_move_score(board_info, color, mate=1500):
             if color == 'white':
                 if board_info['score'].is_mate():
-                    m = board_info['score'].white().score(mate_score=mate)
+                    move_score = board_info['score'].white().score(mate_score=mate)
                 else: 
-                    m = int(format(board_info['score'].white().score()))
+                    move_score = int(format(board_info['score'].white().score()))
             else:
                 if board_info['score'].is_mate():
-                    m = board_info['score'].black().score(mate_score=mate)
+                    move_score = board_info['score'].black().score(mate_score=mate)
                 else: 
-                    m = int(format(board_info['score'].black().score()))
-
-            return m
+                    move_score = int(format(board_info['score'].black().score()))
+            return move_score
 
         print('Number of games: ', self.df.shape[0])
         for index, row in self.df.iterrows():
@@ -162,5 +171,7 @@ class PGNReader:
 # pgn = PGNReader('stevenadema', 2)
 # df = pgn.df
 # df = df[['url','fen_x','move_no','my_move_uci','my_move_score','best_move_uci','best_move_score','difs']]
-# df = df[df['difs'] > 100]
+# # df = df[df['difs'] > 100]
 # print(df)
+# content  = df.loc[0].to_json()
+# print(content)
