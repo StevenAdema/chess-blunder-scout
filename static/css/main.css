@@ -48,15 +48,7 @@ html{
     width: 100%;
     margin-top: -30px;
 }
-.loader {
-      position: absolute;
-   margin: 0 auto;
-   z-index: 9999;
-   background: url('icon-loader.gif') no-repeat;
-      top: 50 px;
-   cursor: wait;
-}
- input {
+input {
      width: 98%;
      margin-left: auto;
      margin-right: auto;
@@ -72,13 +64,10 @@ html{
      background-color: #e7e7e7;
      font-weight: bold;
 }
-}
  #name_input:focus {
-     outline: none;
      border: solid 7px #87abb4;
-     background-color: #ffffff;
      transition: 0.5s;
-     z-index: -1;
+     outline: none;
 }
  #greet {
      background-color: #4F6C73;

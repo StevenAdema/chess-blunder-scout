@@ -28,8 +28,7 @@
             </form>
             <br>
         </div>
-        <div class="loader"></div>
-        <img src="{{ url_for('static', filename='chess.gif') }}" id="loader"></img>
+        <img src="{{ url_for('static', filename='chess.gif') }}" id="loader">
 <div class="div01"></div>
 <div class="div1"><a href="{{ url }}" target="_blank">Game from {{ date }} <i class="fas fa-external-link-alt"></i></a></div>
 <div class="div2">{{ user }} ({{ user_rating }})</div>
@@ -44,9 +43,6 @@
 let toggle = 1;
 let toggle2 = 1;
 
-$(window).load(function(){
-    $('div.loading').fadeOut(1000);
-});
 
 document.getElementById("myForm").onkeypress = function(e) {
   var key = e.charCode || e.keyCode || 0;     
@@ -142,7 +138,10 @@ function showMyMove() {
 }
 
 function reload_page() {
-location.reload();
+    document.getElementById("loader").style.display="inline";
+    document.getElementsByClassName("button button_new")[0].value = "Looking For New Position...";
+        document.getElementsByClassName("button button_new")[0].style.backgroundColor="#8f5c6d";
+    location.reload();
 }
 
 </script>

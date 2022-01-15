@@ -6,13 +6,13 @@
 
 {% block body %}
     <div class="aligned">
-        <img src="{{ url_for('static', filename='blunder_scout.png') }}">
+        <img src="{{ url_for('static', filename='blunder_scout.png') }}" id="logo">
     </div>
     <h3 class="simple_text">Correct a random blunder from a previous game</h3>
     <br>
     <div class="form_container">
         <form action="blunders" method="post" class="form" autocomplete="off">
-            <input type="text" name="name_input" placeholder="your chess.com username" autocomplete="off">
+            <input type="text" id="name_input" name="name_input" placeholder="your chess.com username" autocomplete="off">
             <input type="submit" value="SUBMIT" id="greet" onclick="func">
         </form>
     </div>

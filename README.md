@@ -1,4 +1,4 @@
-![Blunder Scout Logo](/static/css/blunder_scout.png)
+![Blunder Scout Logo](/static/blunder_scout.png)
 
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Correct blunders from your previous games on Chess.com
 

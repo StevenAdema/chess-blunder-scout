@@ -28,7 +28,7 @@ def greeter():
     df = pgn.df
     # print(df)
     # df = pd.read_csv('df3.csv', sep='|')
-    df = df[df['difs'] > 100]
+    df = df[df['difs'] > 150]
     move_no = df['move_no'].values[0]
     best_move = str(df['best_move_san'].values[0])
     best_move_uci = str(df['best_move_uci'].values[0])
