@@ -21,8 +21,8 @@ def index():
 
 @app.route('/blunders', methods=['POST', 'GET'])
 def greeter():
-    # chess_user = str(request.form['name_input'])
-    chess_user = 'stevenadema'
+    chess_user = str(request.form['name_input'])
+    # chess_user = 'stevenadema'
     pgn = PGNReader(chess_user, 1)
     pgn.filter_time_control('600') 
     df = pgn.df

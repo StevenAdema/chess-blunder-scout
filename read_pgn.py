@@ -23,6 +23,7 @@ class PGNReader:
     df = pd.DataFrame(columns=df_cols)
 
     def __init__(self, username, lookback, time_control='600', limit=False):
+        print(self.df)
         self.username = username
         self.lookback = lookback
         self.time_control = time_control
@@ -40,8 +41,9 @@ class PGNReader:
         while lookback > 0:
             d = dt - relativedelta(months=lookback)
             d = d.strftime('%Y/%m')
-            response = requests.get(
-                r'https://api.chess.com/pub/player/' + username + '/games/' + d)
+            api_call = r'https://api.chess.com/pub/player/' + username + r'/games/2022/09'
+            response = requests.get(api_call)
+            print(response)
             j = json.loads(response.content.decode('utf-8'))
             self.df = self.df.append(pd.DataFrame(j['games']), sort=True)
             lookback -= 1
@@ -168,10 +170,10 @@ class PGNReader:
 
         return game_moves_df
 
-# pgn = PGNReader('stevenadema', 2)
-# df = pgn.df
-# df = df[['url','fen_x','move_no','my_move_uci','my_move_score','best_move_uci','best_move_score','difs']]
-# # df = df[df['difs'] > 100]
-# print(df)
-# content  = df.loc[0].to_json()
-# print(content)
+pgn = PGNReader('markbouwman', 1, time_control='300')
+df = pgn.df
+df = df[['url','fen_x','move_no','my_move_uci','my_move_score','best_move_uci','best_move_score','difs']]
+# df = df[df['difs'] > 100]
+print(df)
+content  = df.loc[0].to_json()
+print(content)
