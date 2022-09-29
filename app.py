@@ -24,10 +24,11 @@ def greeter():
     chess_user = str(request.form['name_input'])
     # chess_user = 'stevenadema'
     pgn = PGNReader(chess_user, 1)
-    pgn.filter_time_control('600') 
+    # pgn.filter_time_control('600')
     df = pgn.df
     # print(df)
     # df = pd.read_csv('df3.csv', sep='|')
+    print(df)
     df = df[df['difs'] > 150]
     move_no = df['move_no'].values[0]
     best_move = str(df['best_move_san'].values[0])
