@@ -13,7 +13,7 @@ pd.set_option('display.width', 1000)
 pd.set_option('display.max_colwidth', 300)
 
 class PGNReader:
-    engine_path = 'C:/Users/Steven/Documents/Unsorted/stockfish_14.1_win_x64_avx2.exe'
+    engine_path = './engine/stockfish_14.1_win_x64_avx2.exe'
     eval_time = 15  # Set time for move evaluation
     limit = 60 # move limit for analysis
     df_cols = ['url', 'pgn', 'time_control', 'end_time', 'rated', 'time_class',
@@ -43,6 +43,7 @@ class PGNReader:
             api_call = r'https://api.chess.com/pub/player/' + username + r'/games/2022/09'
             response = requests.get(api_call)
             j = json.loads(response.content.decode('utf-8'))
+            print(j)
             self.df = self.df.append(pd.DataFrame(j['games']), sort=True)
             lookback -= 1
 
@@ -168,10 +169,10 @@ class PGNReader:
 
         return game_moves_df
 
-# pgn = PGNReader('markbouwman', 1, time_control='300')
-# df = pgn.df
-# df = df[['url','fen_x','move_no','my_move_uci','my_move_score','best_move_uci','best_move_score','difs']]
-# # df = df[df['difs'] > 100]
-# print(df)
-# content  = df.loc[0].to_json()
-# print(content)
+pgn = PGNReader('markbouwman', 1, time_control='300')
+df = pgn.df
+df = df[['url','fen_x','move_no','my_move_uci','my_move_score','best_move_uci','best_move_score','difs']]
+# df = df[df['difs'] > 100]
+print(df)
+content  = df.loc[0].to_json()
+print(content)
